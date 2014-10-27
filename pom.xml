@@ -7,6 +7,13 @@
     <groupId>pl.defabricated</groupId>
     <artifactId>BarAPI</artifactId>
     <version>1.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.7.10-R0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 
 </project>
