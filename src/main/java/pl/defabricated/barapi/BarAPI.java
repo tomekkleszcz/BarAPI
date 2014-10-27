@@ -24,20 +24,50 @@ public class BarAPI {
     }
 
     public static void setMessage(Player player, String message, float health, int seconds) {
-
+        DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
+        if(dragon != null) {
+            dragon.setMessage(message);
+            dragon.setHealth(health);
+            if(seconds >= 0) {
+                dragon.setTime(System.currentTimeMillis() + (seconds * 1000));
+            } else {
+                dragon.setTime(0L);
+            }
+        } else {
+            dragon = plugin.dataManager.createDragon(player, message, health, seconds);
+        }
+        dragon.sendUpdate();
     }
 
     public static void setHealth(Player player, float health) {
-
+        DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
+        if(dragon == null) {
+            return;
+        }
+        dragon.setHealth(health);
+        dragon.sendUpdate();
     }
 
     public static void setTime(Player player, int seconds) {
-
+        DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
+        if(dragon == null) {
+            return;
+        }
+        dragon.setTime(System.currentTimeMillis() + (seconds * 1000));
+        dragon.sendUpdate();
     }
 
-    public static boolean hasMessage(Player player) {
+    public static boolean isMessageVisible(Player player) {
         DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
         return dragon == null ? false : (dragon.getTime() < System.currentTimeMillis() ? false : true);
+    }
+
+    public static String getMessage(Player player) {
+        DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
+        if(dragon == null) {
+            return null;
+        }
+        return dragon.getMessage();
     }
 
 }

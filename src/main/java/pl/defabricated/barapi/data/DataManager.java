@@ -23,8 +23,10 @@ public class DataManager {
         return getDragonByNick(player.getName());
     }
 
-    public DataDragon createDragon(Player player, String message) {
-
+    public DataDragon createDragon(Player player, String message, float health, long time) {
+        DataDragon dragon = new DataDragon(player, message, health, time);
+        dragons.put(player.getName(), dragon);
+        return dragon;
     }
 
 }
