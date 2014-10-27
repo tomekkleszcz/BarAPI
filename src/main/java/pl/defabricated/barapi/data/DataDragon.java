@@ -1,6 +1,8 @@
 package pl.defabricated.barapi.data;
 
+import com.comphenix.protocol.events.PacketContainer;
 import org.bukkit.entity.Player;
+import pl.defabricated.barapi.BarUtils;
 
 public class DataDragon {
 
@@ -30,7 +32,10 @@ public class DataDragon {
     public boolean isSent() { return sent; }
 
     public void sendUpdate() {
-
+        if(time <= System.currentTimeMillis()) {
+            sent = false;
+            BarUtils.sendRemovePacket(player);
+        }
     }
 
 }

@@ -2,3 +2,4 @@ name: BarAPI
 main: pl.defabricated.barapi.BarAPI
 author: defabricated
 version: 1.0
+depend: [ProtocolLib]
