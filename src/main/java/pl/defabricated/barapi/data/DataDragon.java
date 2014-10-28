@@ -13,7 +13,7 @@ public class DataDragon {
         this.time = time;
     }
 
-    private boolean cMessage, cHealth, cTime;
+    private boolean cMessage, cHealth;
 
     private Player player;
     private String message;
@@ -23,7 +23,7 @@ public class DataDragon {
 
     public void setMessage(String message) { this.message = message; cMessage = true; }
     public void setHealth(float health) { this.health = health; cHealth = true; }
-    public void setTime(long time) { this.time = time; cTime = true; }
+    public void setTime(long time) { this.time = time; }
 
     public Player getPlayer() { return player; }
     public String getMessage() { return message; }
@@ -32,10 +32,21 @@ public class DataDragon {
     public boolean isSent() { return sent; }
 
     public void sendUpdate() {
+        if(!sent) {
+            sent = true;
+            BarUtils.sendSpawnPacket(player, message, health);
+        }
         if(time <= System.currentTimeMillis()) {
             sent = false;
             BarUtils.sendRemovePacket(player);
+            return;
         }
+        if(cHealth || cMessage) {
+            cHealth = false;
+            cMessage = false;
+            BarUtils.sendUpdatePacket(player);
+        }
+        BarUtils.sendTeleportPacket(player);
     }
 
 }

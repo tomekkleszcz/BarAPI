@@ -70,4 +70,12 @@ public class BarAPI {
         return dragon.getMessage();
     }
 
+    public static float getHealth(Player player) {
+        DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
+        if(dragon == null) {
+            return -1F;
+        }
+        return dragon.getHealth();
+    }
+
 }
