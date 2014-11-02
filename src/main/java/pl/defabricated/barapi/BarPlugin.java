@@ -2,18 +2,13 @@ package pl.defabricated.barapi;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import pl.defabricated.barapi.data.DataManager;
 import pl.defabricated.barapi.listeners.PlayerKickListener;
 import pl.defabricated.barapi.listeners.PlayerQuitListener;
 
-public class BarPlugin extends JavaPlugin implements Listener {
+public class BarPlugin extends JavaPlugin {
 
     public DataManager dataManager;
 

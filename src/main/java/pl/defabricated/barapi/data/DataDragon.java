@@ -1,6 +1,5 @@
 package pl.defabricated.barapi.data;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import pl.defabricated.barapi.BarUtils;
 
