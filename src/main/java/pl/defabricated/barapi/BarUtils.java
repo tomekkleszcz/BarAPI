@@ -6,6 +6,7 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import pl.defabricated.barapi.data.DataDragon;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -53,11 +54,34 @@ public class BarUtils {
     }
 
     public static void sendTeleportPacket(Player player) {
+        Location loc = player.getLocation().clone();
+        loc.setY(-200);
 
+        PacketContainer packet = plugin.protocolManager.createPacket(PacketType.Play.Server.ENTITY_TELEPORT);
+        packet.getIntegers().write(0, -1).write(1, (int) Math.floor(loc.getX() * 32.0D)).write(2, (int) Math.floor(loc.getY() * 32.0D)).write(3, (int) Math.floor(loc.getZ() * 32.0D));
+        packet.getBytes().write(0, (byte) 0).write(1, (byte) 0);
+
+        try {
+            plugin.protocolManager.sendServerPacket(player, packet);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void sendUpdatePacket(Player player) {
+        PacketContainer packet = plugin.protocolManager.createPacket(PacketType.Play.Server.ENTITY_METADATA);
+        packet.getIntegers().write(0, -1);
 
+        DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
+
+        WrappedDataWatcher watcher = new WrappedDataWatcher();
+        watcher.setEntity(null);
+        watcher.setObject(0, (Byte) (byte) 0x20);
+        watcher.setObject(6, (Float) (float) (dragon != null ? dragon.getHealth() * 2 : 0F));
+        watcher.setObject(10, (String) (dragon != null ? dragon.getMessage() : ""));
+        watcher.setObject(11, (Byte) (byte) (BarAPI.isMessageVisible(player) ? 1 : 0));
+
+        packet.getDataWatcherModifier().write(0, watcher);
     }
 
 }

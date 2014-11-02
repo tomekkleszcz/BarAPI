@@ -1,6 +1,5 @@
 package pl.defabricated.barapi.data;
 
-import com.comphenix.protocol.events.PacketContainer;
 import org.bukkit.entity.Player;
 import pl.defabricated.barapi.BarUtils;
 
