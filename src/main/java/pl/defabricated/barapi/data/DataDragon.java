@@ -1,5 +1,6 @@
 package pl.defabricated.barapi.data;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import pl.defabricated.barapi.BarUtils;
 
@@ -31,21 +32,29 @@ public class DataDragon {
     public boolean isSent() { return sent; }
 
     public void sendUpdate() {
-        if(!sent) {
-            sent = true;
-            BarUtils.sendSpawnPacket(player, message, health);
-        }
         if(time <= System.currentTimeMillis()) {
             sent = false;
             BarUtils.sendRemovePacket(player);
             return;
         }
-        if(cHealth || cMessage) {
+        if(!sent) {
+            sent = true;
             cHealth = false;
             cMessage = false;
-            BarUtils.sendUpdatePacket(player);
+            BarUtils.sendSpawnPacket(player, message, health);
+            return;
+        } else {
+            if (cHealth || cMessage) {
+                cHealth = false;
+                cMessage = false;
+                BarUtils.sendUpdatePacket(player);
+            }
+            BarUtils.sendTeleportPacket(player);
         }
-        BarUtils.sendTeleportPacket(player);
+    }
+
+    public void removeDragon() {
+        BarUtils.sendRemovePacket(player);
     }
 
 }

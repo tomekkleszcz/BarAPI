@@ -1,5 +1,5 @@
 name: BarAPI
-main: pl.defabricated.barapi.BarAPI
+main: pl.defabricated.barapi.BarPlugin
 author: defabricated
 version: 1.0
 depend: [ProtocolLib]

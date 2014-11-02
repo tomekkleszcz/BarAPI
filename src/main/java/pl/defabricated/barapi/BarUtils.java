@@ -3,6 +3,7 @@ package pl.defabricated.barapi;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import com.comphenix.protocol.wrappers.WrappedWatchableObject;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -32,15 +33,15 @@ public class BarUtils {
 
     public static void sendSpawnPacket(Player player, String message, float health) {
         Location loc = player.getLocation().clone();
-        loc.setY(-200);
+        loc.setY(100);
 
         PacketContainer packet = plugin.protocolManager.createPacket(PacketType.Play.Server.SPAWN_ENTITY_LIVING);
-        packet.getIntegers().write(0, -1).write(1, (int) EntityType.ENDER_DRAGON.getTypeId()).write(2, (int) Math.floor(loc.getBlockX() * 32.0D)).write(3, (int) Math.floor(loc.getBlockY() * 32.0D)).write(4, (int) Math.floor(loc.getBlockZ() * 32.0D)).write(5, 0).write(6, 0).write(7, 0).write(8, 0).write(9, 0).write(10, 0);
+        packet.getIntegers().write(0, -1).write(1, (int) EntityType.ENDER_DRAGON.getTypeId()).write(2, (int) Math.floor(loc.getBlockX() * 32.0D)).write(3, (int) Math.floor(loc.getBlockY() * 32.0D)).write(4, (int) Math.floor(loc.getBlockZ() * 32.0D)).write(5, 0).write(6, 0).write(7, 0);
 
         WrappedDataWatcher watcher = new WrappedDataWatcher();
-        watcher.setEntity(null);
+        watcher.setEntity(player);
         watcher.setObject(0, (Byte) (byte) 0x20);
-        watcher.setObject(6, (Float) (float) health);
+        watcher.setObject(6, (Float) (float) health * 2);
         watcher.setObject(10, (String) message);
         watcher.setObject(11, (Byte) (byte) 1);
 
@@ -55,7 +56,7 @@ public class BarUtils {
 
     public static void sendTeleportPacket(Player player) {
         Location loc = player.getLocation().clone();
-        loc.setY(-200);
+        loc.setY(100);
 
         PacketContainer packet = plugin.protocolManager.createPacket(PacketType.Play.Server.ENTITY_TELEPORT);
         packet.getIntegers().write(0, -1).write(1, (int) Math.floor(loc.getX() * 32.0D)).write(2, (int) Math.floor(loc.getY() * 32.0D)).write(3, (int) Math.floor(loc.getZ() * 32.0D));
@@ -75,13 +76,19 @@ public class BarUtils {
         DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
 
         WrappedDataWatcher watcher = new WrappedDataWatcher();
-        watcher.setEntity(null);
+        watcher.setEntity(player);
         watcher.setObject(0, (Byte) (byte) 0x20);
         watcher.setObject(6, (Float) (float) (dragon != null ? dragon.getHealth() * 2 : 0F));
         watcher.setObject(10, (String) (dragon != null ? dragon.getMessage() : ""));
-        watcher.setObject(11, (Byte) (byte) (BarAPI.isMessageVisible(player) ? 1 : 0));
+        watcher.setObject(11, (Byte) (byte) (dragon == null ? 0 : (dragon.getTime() <= System.currentTimeMillis() ? 0 : 1)));
 
-        packet.getDataWatcherModifier().write(0, watcher);
+        packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+
+        try {
+            plugin.protocolManager.sendServerPacket(player, packet);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -29,4 +29,8 @@ public class DataManager {
         return dragon;
     }
 
+    public DataDragon removeDragon(Player player) {
+        return dragons.remove(player.getName().toLowerCase());
+    }
+
 }

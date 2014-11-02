@@ -34,7 +34,7 @@ public class BarAPI {
                 dragon.setTime(0L);
             }
         } else {
-            dragon = plugin.dataManager.createDragon(player, message, health, seconds);
+            dragon = plugin.dataManager.createDragon(player, message, health, System.currentTimeMillis() + (seconds * 1000));
         }
         dragon.sendUpdate();
     }
@@ -59,7 +59,7 @@ public class BarAPI {
 
     public static boolean isMessageVisible(Player player) {
         DataDragon dragon = plugin.dataManager.getDragonByPlayer(player);
-        return dragon == null ? false : (dragon.getTime() < System.currentTimeMillis() ? false : true);
+        return dragon == null ? false : (dragon.getTime() <= System.currentTimeMillis() ? false : true);
     }
 
     public static String getMessage(Player player) {
