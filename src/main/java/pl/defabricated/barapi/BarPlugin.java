@@ -31,7 +31,7 @@ public class BarPlugin extends JavaPlugin {
 
         this.protocolManager = ProtocolLibrary.getProtocolManager();
 
-        this.messageTask = new MessageTask(this).runTaskTimerAsynchronously(this, 20L, 20L);
+        this.messageTask = new MessageTask(this).runTaskTimerAsynchronously(this, 5L, 5L);
 
         this.playerKickListener = new PlayerKickListener(this);
         this.playerQuitListener = new PlayerQuitListener(this);

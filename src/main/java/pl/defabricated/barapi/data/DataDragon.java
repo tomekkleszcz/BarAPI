@@ -31,7 +31,7 @@ public class DataDragon {
     public boolean isSent() { return sent; }
 
     public void sendUpdate() {
-        if(time <= System.currentTimeMillis()) {
+        if(time <= System.currentTimeMillis() && time > 0L) {
             sent = false;
             BarUtils.sendRemovePacket(player);
             return;

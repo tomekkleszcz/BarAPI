@@ -34,7 +34,7 @@ public class BarAPI {
                 dragon.setTime(0L);
             }
         } else {
-            dragon = plugin.dataManager.createDragon(player, message, health, System.currentTimeMillis() + (seconds * 1000));
+            dragon = plugin.dataManager.createDragon(player, message, health, (seconds >= 0 ? System.currentTimeMillis() + (seconds * 1000) : 0L));
         }
         dragon.sendUpdate();
     }
