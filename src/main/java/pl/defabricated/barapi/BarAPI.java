@@ -78,4 +78,12 @@ public class BarAPI {
         return dragon.getHealth();
     }
 
+    public static void removeMessage(Player player) {
+        DataDragon dragon = plugin.dataManager.removeDragon(player);
+        if(dragon == null) {
+            return;
+        }
+        dragon.removeDragon();
+    }
+
 }
