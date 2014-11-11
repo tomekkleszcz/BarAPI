@@ -20,7 +20,9 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         DataDragon dragon = plugin.dataManager.removeDragon(player);
-        dragon.removeDragon();
+        if(dragon != null) {
+            dragon.removeDragon();
+        }
     }
 
 }

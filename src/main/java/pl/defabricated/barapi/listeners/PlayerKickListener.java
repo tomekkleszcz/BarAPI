@@ -20,7 +20,9 @@ public class PlayerKickListener implements Listener {
     public void onPlayerKick(PlayerKickEvent event) {
         Player player = event.getPlayer();
         DataDragon dragon = plugin.dataManager.removeDragon(player);
-        dragon.removeDragon();
+        if(dragon != null) {
+            dragon.removeDragon();
+        }
     }
 
 }
