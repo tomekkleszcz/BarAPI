@@ -10,7 +10,6 @@ import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolData;
 import pl.defabricated.barapi.data.DataDragon;
 
 import java.lang.reflect.InvocationTargetException;
@@ -115,7 +114,7 @@ public class BarUtils {
         Location loc = player.getLocation().clone();
 
         if(!useHack(player)) {
-            return loc.subtract(0, -200, 0);
+            return loc.subtract(0, 200, 0);
         }
 
         loc = player.getLocation().add(player.getLocation().getDirection().normalize().multiply(64));
