@@ -7,6 +7,7 @@ import org.bukkit.scheduler.BukkitTask;
 import pl.defabricated.barapi.data.DataManager;
 import pl.defabricated.barapi.listeners.PlayerKickListener;
 import pl.defabricated.barapi.listeners.PlayerQuitListener;
+import pl.defabricated.barapi.listeners.VehicleExitListener;
 
 public class BarPlugin extends JavaPlugin {
 
@@ -21,6 +22,7 @@ public class BarPlugin extends JavaPlugin {
 
     PlayerKickListener playerKickListener;
     PlayerQuitListener playerQuitListener;
+    VehicleExitListener vehicleExitListener;
 
     @Override
     public void onEnable() {
@@ -35,6 +37,7 @@ public class BarPlugin extends JavaPlugin {
 
         this.playerKickListener = new PlayerKickListener(this);
         this.playerQuitListener = new PlayerQuitListener(this);
+        this.vehicleExitListener = new VehicleExitListener(this);
     }
 
 }

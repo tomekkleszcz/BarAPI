@@ -53,6 +53,7 @@ public class DataDragon {
     }
 
     public void removeDragon() {
+        sent = false;
         BarUtils.sendRemovePacket(player);
     }
 
