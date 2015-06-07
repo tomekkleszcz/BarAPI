@@ -16,16 +16,16 @@ public class DataManager {
     HashMap<String, DataDragon> dragons = new HashMap();
 
     public DataDragon getDragonByNick(String nick) {
-        return dragons.get(nick);
+        return dragons.get(nick.toLowerCase());
     }
 
     public DataDragon getDragonByPlayer(Player player) {
-        return getDragonByNick(player.getName());
+        return getDragonByNick(player.getName().toLowerCase());
     }
 
     public DataDragon createDragon(Player player, String message, float health, long time) {
         DataDragon dragon = new DataDragon(player, message, health, time);
-        dragons.put(player.getName(), dragon);
+        dragons.put(player.getName().toLowerCase(), dragon);
         return dragon;
     }
 
