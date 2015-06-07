@@ -41,7 +41,6 @@ public class DataDragon {
             cHealth = false;
             cMessage = false;
             BarUtils.sendSpawnPacket(player, message, health);
-            return;
         } else {
             if (cHealth || cMessage) {
                 cHealth = false;
